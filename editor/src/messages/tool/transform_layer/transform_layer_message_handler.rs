@@ -406,7 +406,7 @@ impl MessageHandler<TransformLayerMessage, TransformData<'_>> for TransformLayer
 					update_colinear_handles(&selected_layers, document, responses);
 					responses.add(DocumentMessage::EndTransaction);
 					responses.add(ToolMessage::UpdateHints);
-					responses.add(NodeGraphMessage::RunDocumentGraph);
+					responses.add(PortfolioMessage::CompileActiveDocument);
 				}
 
 				responses.add(SelectToolMessage::PivotShift { offset: None, flush: true });

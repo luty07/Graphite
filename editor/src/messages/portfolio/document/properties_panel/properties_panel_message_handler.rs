@@ -4,6 +4,22 @@ use crate::messages::portfolio::document::node_graph::document_node_definitions:
 use crate::messages::portfolio::utility_types::PersistentData;
 use crate::messages::prelude::*;
 
+use crate::messages::portfolio::document::utility_types::network_interface::NodeNetworkInterface;
+use graph_craft::document::NodeId;
+pub struct PropertiesPanelMessageHandlerData<'a> {
+	pub network_interface: &'a mut NodeNetworkInterface,
+	pub selection_network_path: &'a [NodeId],
+	pub document_name: &'a str,
+}
+
+use crate::messages::portfolio::document::utility_types::network_interface::NodeNetworkInterface;
+use graph_craft::document::NodeId;
+pub struct PropertiesPanelMessageHandlerData<'a> {
+	pub network_interface: &'a mut NodeNetworkInterface,
+	pub selection_network_path: &'a [NodeId],
+	pub document_name: &'a str,
+}
+
 #[derive(Debug, Clone, Default, ExtractField)]
 pub struct PropertiesPanelMessageHandler {}
 
@@ -14,7 +30,6 @@ impl MessageHandler<PropertiesPanelMessage, (&PersistentData, PropertiesPanelMes
 			network_interface,
 			selection_network_path,
 			document_name,
-			executor,
 		} = data;
 
 		match message {
@@ -31,7 +46,6 @@ impl MessageHandler<PropertiesPanelMessage, (&PersistentData, PropertiesPanelMes
 					network_interface,
 					selection_network_path,
 					document_name,
-					executor,
 				};
 				let properties_sections = NodeGraphMessageHandler::collate_properties(&mut context);
 
