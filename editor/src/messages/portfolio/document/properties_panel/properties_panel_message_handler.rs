@@ -1,11 +1,11 @@
-use super::utility_types::PropertiesPanelMessageHandlerData;
+use graphene_std::uuid::NodeId;
+
 use crate::messages::layout::utility_types::widget_prelude::*;
 use crate::messages::portfolio::document::node_graph::document_node_definitions::NodePropertiesContext;
 use crate::messages::portfolio::utility_types::PersistentData;
 use crate::messages::prelude::*;
 
 use crate::messages::portfolio::document::utility_types::network_interface::NodeNetworkInterface;
-use graph_craft::document::NodeId;
 pub struct PropertiesPanelMessageHandlerData<'a> {
 	pub network_interface: &'a mut NodeNetworkInterface,
 	pub selection_network_path: &'a [NodeId],
