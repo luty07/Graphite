@@ -8,12 +8,12 @@ use crate::bounds::BoundingBox;
 use crate::instances::{Instance, InstanceMut, Instances};
 use crate::raster_types::{CPU, GPU, RasterDataTable};
 use crate::registry::types::{Angle, Fraction, IntegerCount, Length, Multiplier, Percentage, PixelLength, PixelSize, SeedValue};
-use crate::transform::{Footprint, ReferencePoint, Transform};
+use crate::transform::{ ReferencePoint, Transform};
 use crate::vector::algorithms::merge_by_distance::MergeByDistanceExt;
 use crate::vector::misc::{MergeByDistanceAlgorithm, PointSpacingType};
 use crate::vector::style::{PaintOrder, StrokeAlign, StrokeCap, StrokeJoin};
 use crate::vector::{FillId, PointDomain, RegionId};
-use crate::{CloneVarArgs, Color, Context, Ctx, ExtractAll, GraphicElement, GraphicGroupTable, OwnedContextImpl};
+use crate::{ Color,  Ctx, GraphicElement, GraphicGroupTable};
 use bezier_rs::{Join, ManipulatorGroup, Subpath};
 use glam::{DAffine2, DVec2};
 use kurbo::{Affine, BezPath, DEFAULT_ACCURACY, ParamCurve, PathEl, PathSeg, Shape};
@@ -1896,10 +1896,7 @@ async fn path_length(_: impl Ctx, source: VectorDataTable) -> f64 {
 }
 
 #[node_macro::node(category("Vector: Measure"), path(graphene_core::vector))]
-async fn area(ctx: impl Ctx + CloneVarArgs + ExtractAll, vector_data: impl Node<Context<'static>, Output = VectorDataTable>) -> f64 {
-	let new_ctx = OwnedContextImpl::from(ctx).with_footprint(Footprint::default()).into_context();
-	let vector_data = vector_data.eval(new_ctx).await;
-
+async fn area(_ctx: impl Ctx, vector_data: VectorDataTable) -> f64 {
 	vector_data
 		.instance_ref_iter()
 		.map(|vector_data_instance| {
@@ -1910,10 +1907,7 @@ async fn area(ctx: impl Ctx + CloneVarArgs + ExtractAll, vector_data: impl Node<
 }
 
 #[node_macro::node(category("Vector: Measure"), path(graphene_core::vector))]
-async fn centroid(ctx: impl Ctx + CloneVarArgs + ExtractAll, vector_data: impl Node<Context<'static>, Output = VectorDataTable>, centroid_type: CentroidType) -> DVec2 {
-	let new_ctx = OwnedContextImpl::from(ctx).with_footprint(Footprint::default()).into_context();
-	let vector_data = vector_data.eval(new_ctx).await;
-
+async fn centroid(_ctx: impl Ctx, vector_data: VectorDataTable, centroid_type: CentroidType) -> DVec2 {
 	if vector_data.is_empty() {
 		return DVec2::ZERO;
 	}
